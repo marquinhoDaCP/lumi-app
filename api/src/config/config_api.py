@@ -1,5 +1,8 @@
 from os import environ
 from dotenv import load_dotenv
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
 load_dotenv()
 
@@ -23,5 +26,9 @@ DATABASE = environ.get('DATABASE') or 'lumi'
 DB_DRIVER = environ.get('DB_DRIVER') or 'pymysql'
 DB_DRIVER_ASYNC = environ.get('DB_DRIVER_ASYNC') or 'aiomysql'
 
-CONNECTION_STR_SYNC = f'mysql+{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/lumi'
-CONNECTION_STR_ASYNC = f'mysql+{DB_DRIVER_ASYNC}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/lumi'
+CONNECTION_STR_SYNC = f'mysql+{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DATABASE}'
+CONNECTION_STR_ASYNC = f'mysql+{DB_DRIVER_ASYNC}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DATABASE}'
+
+engine = create_async_engine(CONNECTION_STR_ASYNC, echo=True)
+async_session = sessionmaker(engine, class_=AsyncSession)
+Base = declarative_base()
