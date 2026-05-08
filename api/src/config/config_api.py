@@ -16,6 +16,7 @@ API_EMAIL_APP_PASSWORD = environ.get('API_EMAIL_APP_PASSWORD')
 # Pluggy Config
 PLUGGY_CLIENT_ID = environ.get('PLUGGY_CLIENT_ID')
 PLUGGY_CLIENT_SECRET = environ.get('PLUGGY_CLIENT_SECRET')
+PLUGGY_API_URL = environ.get('PLUGGY_API_URL')
 
 # Database Config
 DB_HOST = environ.get('DB_HOST') or 'localhost'
